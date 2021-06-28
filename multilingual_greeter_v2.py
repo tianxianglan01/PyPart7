@@ -37,7 +37,12 @@ def language_input() -> int:
 
     :return: An integer representing the language choice made by the user
     """
-    choice = input('Please enter a language choice of 1 for English, 2 for Spanish, 3 for Portugeuse')
+    iterateStr = 'Please enter a language choice of '
+    for key in lang_dict:
+        iterateStr += str(key) + ' for ' + lang_dict[key] + ', '
+
+
+    choice = input(iterateStr[:-2] + '\n')
     return int(choice)  # remove pass statement and implement me
 
 
@@ -97,16 +102,58 @@ def greet(name: str, greetings_options: Dict[int, str], lang_choice: int) -> Non
     #print(greetings_options[lang_choice] +' ' +  name + 'haha \n')
     print(greetings_options[lang_choice] + ' ' + name)
 
-    
+def admin_or_user():
+    decision = input("Welcome to the multilingual greeter! Please select \n1: for admin mode \n2: for user mode\n3: to quit\n")
+    return int(decision)
+
+
+def admin_mode():
+    decision = input("You are now in admin mode. Please select\n1: add support for existing languages\n2: update greetings\n3: update a name prompt\n4: main menu \nPlease note new languages need a new greeting and a new name prompt\n")
+    return decision
+def add_languages():
+    languageToAdd = input("Please enter a language to add\n")
+    lang_dict[len(lang_dict) + 1] = languageToAdd
+
+
+def add_greetings():
+    greetingToAdd = input("Please enter a greeting to add\n")
+    greetings_dict[len(greetings_dict) + 1] = greetingToAdd
+
+def add_hello():
+    new_name_prompt = input('Please enter a new name question\n')
+    name_prompt_dict[len(name_prompt_dict) + 1] = new_name_prompt
 
 
 if __name__ == '__main__':
-    print_language_options(lang_dict)
-    chosen_lang = language_input()
-    while language_choice_is_valid(lang_dict, chosen_lang) is False:
-        print("Invalid selection. Try again.")
-        chosen_lang = language_input()
+    while True:
+        menuDec = admin_or_user()
+        if menuDec == 3:
+            print('Goodbye! :)')
+            break
+        elif menuDec == 1:
+            while True:
+                adminDec = admin_mode()
+                print("adminDec: " + str(adminDec))
+                if int(adminDec) == 4:
+                    break
+                elif int(adminDec) == 1:
+                    a = add_languages()
+                    print(lang_dict)
+                elif int(adminDec) == 2:
+                    b = add_greetings()
+                    print(greetings_dict)
+                elif int(adminDec) == 3:
+                    c = add_hello()
+                    print(name_prompt_dict)
+                else:
+                    print('This is not a valid input')
+        else:
+            print_language_options(lang_dict)
+            chosen_lang = language_input()
+            while language_choice_is_valid(lang_dict, chosen_lang) is False:
+                print("Invalid selection. Try again.")
+                chosen_lang = language_input()
 
-    selected_prompt = f"{get_name_input(name_prompt_dict, chosen_lang)} \n"
-    chosen_name = name_input(selected_prompt)
-    greet(chosen_name, greetings_dict, chosen_lang)
+            selected_prompt = f"{get_name_input(name_prompt_dict, chosen_lang)} \n"
+            chosen_name = name_input(selected_prompt)
+            greet(chosen_name, greetings_dict, chosen_lang)
