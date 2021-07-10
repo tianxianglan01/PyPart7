@@ -1,4 +1,4 @@
-from multilingual_greeter_v2 import Greeter
+from multilingual_greeter_v3 import Greeter
 
 newGreeting = Greeter()
 
@@ -6,6 +6,7 @@ newGreeting = Greeter()
 #break up main while loop into another class?
 
 while True:
+    print('')
     a_or_u = newGreeting.admin_or_user()
     #print(a_or_u)
     if a_or_u == 3:
@@ -24,7 +25,7 @@ while True:
 
             newGreeting.greet()
 
-            break
+
     elif a_or_u == 1: #admin mode
         a_choice = newGreeting.admin_choices()
         while True:
@@ -32,12 +33,14 @@ while True:
                 newGreeting.add_lang()
                 
             elif a_choice == 2:
-                newGreeting.add_name_prompt()
-                
-            elif a_choice == 3:
                 newGreeting.add_greeting()
                 
+            elif a_choice == 3:
+                newGreeting.add_name_prompt()
+                
             elif a_choice == 4:
+                newGreeting.add_greeting__existing_greeting()
+            elif a_choice == 5:
                 break
             else:
                 print("Invalid selection. Try again.")

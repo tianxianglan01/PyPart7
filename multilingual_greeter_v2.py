@@ -3,164 +3,88 @@ from typing import Dict
 # Populate this dictionary with at least two languages.
 # Use integers for keys and strings for values.
 # Example: Key = 1. Value = 'English'.
-lang_dict = {1 : 'English', 2: 'Spanish', 3: 'Portugeuse'
-}
-
-# Populate this dictionary with appropriate prompts that correspond with the ids from lang_dict.
-# Example: Key = 1. Value = 'What is your name?'.
-name_prompt_dict = {1: 'What is your name?', 2: '¿Cómo te llamas?', 3: 'Qual é o seu nome?'
-}
-
-# Populate this dictionary with appropriate prompts that correspond with the ids from lang_dict.
-# Example: Key = 1. Value = 'Hello'.
-greetings_dict = {1: 'Hello', 2: 'Hola', 3: 'Olá'
-}
-
-def print_language_options(lang_options: Dict[int, str]) -> None:
-    """
-    Given a dictionary, this functions iterates through the values and prints them out.
-
-    :param lang_options: A dictionary
-    Keys are integers representing a language id
-    Values are strings representing the name of a language
-    :return: None
-    """
-    print("Please choose a language: ")
-    for key in lang_options:
-        print(str(key) + ': ' + lang_options[key])  # remove pass statement and implement me
-#print_language_options(lang_dict)
-
-
-def language_input() -> int:
-    """
-    This function prompts the user for a language choice.
-
-    :return: An integer representing the language choice made by the user
-    """
-    iterateStr = 'Please enter a language choice of '
-    for key in lang_dict:
-        iterateStr += str(key) + ' for ' + lang_dict[key] + ', '
-
-
-    choice = input(iterateStr[:-2] + '\n')
-    return int(choice)  # remove pass statement and implement me
-
-
-def language_choice_is_valid(lang_options: Dict[int, str], lang_choice: int) -> bool:
-    """
-    This method determines if the choice the user made is valid.
-
-    :param lang_options: A dictionary
-    Keys are integers representing a language id
-    Values are strings representing the name of a language
-
-    :param lang_choice: An integer representing the value the user selected
-    :return: A boolean representing the validity of the lang_choice
-    """
-    if lang_choice in lang_options.keys():
-        return True
-    else:
-        return False
-
-
-def get_name_input(name_prompt_options: Dict[int, str], lang_choice: int) -> str:
-    """
-    This method takes in a dictionary and a key. It returns the value in the dictionary that has a key corresponding to
-    the lang_choice parameter.
-
-    :param name_prompt_options: A dictionary where the key is an integer representing an id and the value is a prompt
-    in the users chosen language
-    :param lang_choice: The language the user has chosen
-    :return:
-    """
-    return name_prompt_options[lang_choice]  # remove pass statement and implement me
-
-
-def name_input(name_prompt: str) -> str:
-    """
-    This function takes in a string and uses it to prompt the user for their name.
-
-    :param name_prompt: A string in the user's chosen language that asks them for their name
-    :return: The user's response when asked for their name
-    """
-
-    return input(name_prompt)
+class Greeter():
     
 
+    def __init__(self):
+        self.lang_dict = {1 : 'English', 2: 'Spanish', 3: 'Portugeuse'}
+        self.name_prompt = {1: 'What is your name?', 2: '¿Cómo te llamas?', 3: 'Qual é o seu nome?'}
+        self.greetings_dict = {1: 'Hello', 2: 'Hola', 3: 'Olá'}
 
-def greet(name: str, greetings_options: Dict[int, str], lang_choice: int) -> None:
-    """
-    Using the parameters provided, this function greets the user.
+        self.language_Choice = None
+        self.asking_for_name = None
+        self.name = None
+        self.greeting = None
 
-    :param name: The name the user provided
-    :param greetings_options: A dictionary where the key is an integer representing a greeting and the value is a string
-    with a greeting in the user's chosen language
-    :param lang_choice: The language the user has chosen.
-    :return:
-    """
-   
-    #print(greetings_options[lang_choice] +' ' +  name + 'haha \n')
-    print(greetings_options[lang_choice] + ' ' + name)
+        self.user_or_admin = None
+        self.admin_choice = None
+        #self.name_prompt = None
 
-def admin_or_user(choice):
-    #select a choice between admin mode, user, mode, and quit
+    def print_language_options(self):
+        print("Please choose a language: ")
+        for key in self.lang_dict:
+            print(str(key) + ': ' + self.lang_dict[key])
     
+    def language_input(self):
+        iterateStr = 'Please enter a language choice of '
+        for key in self.lang_dict:
+            iterateStr += str(key) + ' for ' + self.lang_dict[key] + ', '
 
+        self.language_Choice = input(iterateStr[:-2] + '\n')
+        #print('language_Choice: ', self.language_Choice)
+        print("You picked: "  + self.lang_dict[int(self.language_Choice)])
+        return
 
-
-def admin_mode():
-    decision = input("You are now in admin mode. Please select\n1: add support for existing languages\n2: update greetings\n3: update a name prompt\n4: main menu \nPlease note new languages need a new greeting and a new name prompt\n")
-    return decision 
-
-
-def add_languages():
-    languageToAdd = input("Please enter a language to add\n")
-    lang_dict[len(lang_dict) + 1] = languageToAdd
-
-
-def add_greetings():
-
-    greetings_dict[len(greetings_dict) + 1] = greeting
-
-def add_hello(hello):
-    
-    name_prompt_dict[len(name_prompt_dict) + 1] = hello
-
-
-if __name__ == '__main__':
-    while True:
-        menDec = input("Welcome to the multilingual greeter! Please select \n1: for admin mode \n2: for user mode\n3: to quit\n")
-        level1 = admin_or_user(menDec)
-        if level1 == 3:
-            print('Goodbye! :)')
-            break
-        elif level1 == 1:
-            while True:
-                menDec2 = input("You are now in admin mode. Please select\n1: add support for existing languages\n2: update greetings\n3: update a name prompt\n4: main menu \nPlease note new languages need a new greeting and a new name prompt\n")
-                level2 = admin_mode(menDec2)
-                print("adminDec: " + str(adminDec))
-                if int(level2) == 4:
-                    break
-                elif int(level2) == 1:
-                    a = add_languages()
-                    print(lang_dict)
-                elif int(level2) == 2:
-                    b = add_greetings()
-                    print(greetings_dict)
-                elif int(level2) == 3:
-                    c = add_hello()
-                    print(name_prompt_dict)
-                else:
-                    print('This is not a valid input')
-        elif level1 == 2:
-            print_language_options(lang_dict)
-            chosen_lang = language_input()
-            while language_choice_is_valid(lang_dict, chosen_lang) is False:
-                print("Invalid selection. Try again.")
-                chosen_lang = language_input()
-
-            selected_prompt = f"{get_name_input(name_prompt_dict, chosen_lang)} \n"
-            chosen_name = name_input(selected_prompt)
-            greet(chosen_name, greetings_dict, chosen_lang)
+    def language_choice_is_valid(self):
+        if int(self.language_Choice) in self.lang_dict.keys():
+            #print('Language is valid')
+            return True
         else:
-            print('This is not a valid input')
+            #print('Language is not valid')
+            return False
+
+    def get_name_input(self):
+        self.asking_for_name = self.name_prompt[int(self.language_Choice)]
+        #print('self.name_prompt: ' + self.greeting_of_choice)
+        return
+
+    def name_input(self):
+        self.name = input(self.asking_for_name + '\n')
+        return 
+    
+    def greet(self):
+        print(self.greetings_dict[int(self.language_Choice)] + ' ' + self.name)
+
+    def admin_or_user(self):
+        choice = int(input("Please select 1 for admin, 2 for user mode, 3 to quit\n"))
+        self.user_or_admin = choice
+        print('you picked: ' + str(self.user_or_admin))
+        return choice
+    
+    def admin_choices(self):
+        self.admin_choice = int(input("You are now in admin mode. Please select\n1: add support for existing languages\n2: update greetings\n3: update a name prompt\n4: main menu \nPlease note new languages need a new greeting and a new name prompt\n"))
+        return self.admin_choice
+    
+    def add_lang(self):
+        language = input("Please enter a language to add\n")
+        self.lang_dict[len(self.lang_dict) + 1] = language
+        print(self.lang_dict)
+        return 
+    
+    def add_name_prompt(self):
+        name_prompt = input("Please enter a name prompt to add\n")
+        self.name_prompt[len(self.name_prompt) + 1] = name_prompt
+        print(self.name_prompt)
+        return 
+    
+    def add_greeting(self):
+        greeting = input("Please enter a greeting to add\n")
+        self.greetings_dict[len(self.greetings_dict) + 1] = greeting
+        print(self.greetings_dict)
+        return 
+
+
+#always use an intstance to test on your class methods
+    
+    
+    

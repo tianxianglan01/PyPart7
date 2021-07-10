@@ -1,4 +1,5 @@
 from typing import Dict
+import random
 
 # Populate this dictionary with at least two languages.
 # Use integers for keys and strings for values.
@@ -9,7 +10,7 @@ class Greeter():
     def __init__(self):
         self.lang_dict = {1 : 'English', 2: 'Spanish', 3: 'Portugeuse'}
         self.name_prompt = {1: 'What is your name?', 2: '¿Cómo te llamas?', 3: 'Qual é o seu nome?'}
-        self.greetings_dict = {1: 'Hello', 2: 'Hola', 3: 'Olá'}
+        self.greetings_dict = {1: ['Hello', 'Hey', 'Sup'], 2: ['Hola', 'Mucho Gusto', 'Gusto en verlo'], 3: ['Olá', 'Oi', 'E aí?']}
 
         self.language_Choice = None
         self.asking_for_name = None
@@ -53,7 +54,7 @@ class Greeter():
         return 
     
     def greet(self):
-        print(self.greetings_dict[int(self.language_Choice)] + ' ' + self.name)
+        print(random.choice(self.greetings_dict[int(self.language_Choice)]) + ' ' + self.name)
 
     def admin_or_user(self):
         choice = int(input("Please select 1 for admin, 2 for user mode, 3 to quit\n"))
@@ -62,7 +63,7 @@ class Greeter():
         return choice
     
     def admin_choices(self):
-        self.admin_choice = int(input("You are now in admin mode. Please select\n1: add support for existing languages\n2: update greetings\n3: update a name prompt\n4: main menu \nPlease note new languages need a new greeting and a new name prompt\n"))
+        self.admin_choice = int(input("You are now in admin mode. Please select\n1: add a language\n2: update greetings\n3: update a name prompt\n4: add greeting to existing language\n5: main menu \nPlease note new languages need a new greeting and a new name prompt\n"))
         return self.admin_choice
     
     def add_lang(self):
@@ -79,12 +80,25 @@ class Greeter():
     
     def add_greeting(self):
         greeting = input("Please enter a greeting to add\n")
-        self.greetings_dict[len(self.greetings_dict) + 1] = greeting
+
+        #if self.greetings_dic
+        self.greetings_dict[len(self.greetings_dict) + 1] = [greeting]
         print(self.greetings_dict)
         return 
+    def add_greeting__existing_greeting(self):
+        lang_pick = input("Please enter the language # you'd like to update with a greeting\n")
+        if int(lang_pick) not in self.greetings_dict.keys():
+            print('Your language selection does not already exist.')
+            self.add_greeting__existing_greeting()
+        else:
+            greeting = input("Please enter a greeting to add\n")
+            self.greetings_dict[int(lang_pick)].append(greeting)
+            print(self.greetings_dict)
 
 
 
+
+#always use an intstance to test on your class methods
     
     
     
